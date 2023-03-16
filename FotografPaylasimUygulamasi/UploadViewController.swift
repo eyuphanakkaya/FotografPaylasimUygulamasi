@@ -16,6 +16,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate & 
     
     @IBOutlet weak var aciklamaTextField: NSLayoutConstraint!
     
+    @IBOutlet weak var yorumTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -58,7 +59,19 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate & 
                     imageReferance.downloadURL { url, error in /*imagereferansın içerisindeki urlyi indir */
                         if error == nil {
                             let imageUrl = url?.absoluteString /*urlnin stringe çevrilmiş hali*/
-                            print(imageUrl)
+                            if let imageUrl = imageUrl {
+                                
+                                let firestoreDatabase = Firestore.firestore()/*firestore u çağırıyoruz.*/
+                                let firestorePost = ["gorselUrl" : imageUrl, "yorum" : self.yorumTextField.text!,"email" : Auth.auth().currentUser?.email,"tarih" :FieldValue.serverTimestamp()/*anlık zamanı verir*/] as! [String : Any]
+                                
+                                firestoreDatabase.collection("Post").addDocument(data: firestorePost) { error in
+                                    if error != nil {
+                                        self.hataMesaji(titleInput: "Hata", messageInput: error?.localizedDescription ?? "Hata Aldınız Tekrar Deneyin.")
+                                    }else {
+                                        
+                                    }
+                                }
+                            }
                         }
                     }
                     

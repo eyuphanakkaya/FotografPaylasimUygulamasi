@@ -146,6 +146,7 @@
                     <tabBarItem key="tabBarItem" title="Upload" image="tray.and.arrow.up" catalog="system" id="ChZ-07-RBD"/>
                     <connections>
                         <outlet property="imageView" destination="xbp-eK-Oa5" id="An3-vB-TrI"/>
+                        <outlet property="yorumTextField" destination="2ey-04-3fA" id="zOn-hf-3lz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OQf-0D-upq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
