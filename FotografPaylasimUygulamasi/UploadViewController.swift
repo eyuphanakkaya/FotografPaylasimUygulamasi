@@ -41,11 +41,44 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate & 
     
 
     @IBAction func kaydetTiklandi(_ sender: Any) {
-         
+        let uuid = UUID().uuidString
         let storage = Storage.storage()
+        let referance = storage.reference()/*referans bize bulunduğumuz konumu belirtir*/
+        let mediaFolder = referance.child("media")//media adında bir klasör açmamıza yarar
         
+        if let data = imageView.image?.jpegData(compressionQuality: 0.5){/*imageview ı dataya çeviriyoruz*/
+            let imageReferance = mediaFolder.child("\(uuid).jpg")/*media folderın içerisine image.jpeg diye bir dosya oluşturdu.*/
+            
+            
+            
+            imageReferance.putData(data) { storagemetadata, error in
+                if error != nil {
+                    self.hataMesaji(titleInput: "Hata", messageInput: error?.localizedDescription ?? "Lütfen Tekrar Deneyin")
+                }else{//urlsinin almak için
+                    imageReferance.downloadURL { url, error in /*imagereferansın içerisindeki urlyi indir */
+                        if error == nil {
+                            let imageUrl = url?.absoluteString /*urlnin stringe çevrilmiş hali*/
+                            print(imageUrl)
+                        }
+                    }
+                    
+                }
+            }
+
+            } /*image referansın içerisine veriyi koy */
+        }
+        
+    func hataMesaji(titleInput : String,messageInput : String) {
+        let alert = UIAlertController(title: titleInput, message: messageInput, preferredStyle: UIAlertController.Style.alert)
+        let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.default)
+        alert.addAction(okButton)
+        self.present(alert, animated: true)
+        
+    }
         
     }
     
 
-}
+    
+
+
