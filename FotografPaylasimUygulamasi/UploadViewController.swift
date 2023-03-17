@@ -52,7 +52,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate & 
             
             
             
-            imageReferance.putData(data) { storagemetadata, error in
+            imageReferance.putData(data) { storagemetadata, error in/*image referansın içerisine veriyi koy */
                 if error != nil {
                     self.hataMesaji(titleInput: "Hata", messageInput: error?.localizedDescription ?? "Lütfen Tekrar Deneyin")
                 }else{//urlsinin almak için
@@ -68,7 +68,9 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate & 
                                     if error != nil {
                                         self.hataMesaji(titleInput: "Hata", messageInput: error?.localizedDescription ?? "Hata Aldınız Tekrar Deneyin.")
                                     }else {
-                                        
+                                        self.imageView.image = UIImage(named: "gorselsec2")
+                                        self.yorumTextField.text = ""
+                                        self.tabBarController?.selectedIndex = 0 /*seçilen index*/
                                     }
                                 }
                             }
@@ -78,7 +80,7 @@ class UploadViewController: UIViewController, UIImagePickerControllerDelegate & 
                 }
             }
 
-            } /*image referansın içerisine veriyi koy */
+            }
         }
         
     func hataMesaji(titleInput : String,messageInput : String) {
